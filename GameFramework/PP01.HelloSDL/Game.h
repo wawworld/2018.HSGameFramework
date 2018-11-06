@@ -12,7 +12,6 @@
 class Game
 {
 public:
-	Game() {}
 	~Game() {}
 	bool init(const char* title, int xpos, int ypos,
 		int width, int height, bool fullscreen);
@@ -21,23 +20,32 @@ public:
 	void handleEvents();
 	void clean();
 	bool running() { return m_bRunning; }
+	SDL_Renderer* getRenderer() const { return m_pRenderer; }  // checked : 11
+	// checked : 11											
+	static Game* Instance()
+	{
+		if (s_pInstance == 0)
+		{
+			s_pInstance = new Game();
+			return s_pInstance;
+		}
+		return s_pInstance;
+	}
+
 private:
-	SDL_Window * m_pWindow;
-	SDL_Renderer* m_pRenderer;
+	Game() {} // checked : 11
+	static Game*	s_pInstance; // checked : 11
+	SDL_Window *	m_pWindow;
+	SDL_Renderer*	m_pRenderer;
+	bool			m_bRunning;
 
-	//TextureManager m_textureManager; // checked.08
-	int m_currentFrame; // checked.07
-
-	bool m_bRunning;
-
-	// checked.10
-	//GameObject m_go;
-	//Player m_player;
 
 	// checked.10
 	std::vector<GameObject*> m_gameObjects;
-
-	GameObject* m_go;
-	GameObject* m_player;
-	GameObject* m_enemy;
+	// checked.11
+	//GameObject* m_go;
+	//GameObject* m_player;
+	//GameObject* m_enemy;
 };
+
+typedef Game TheGame; // checked : 11
