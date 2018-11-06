@@ -1,4 +1,24 @@
-#include<SDL.h>
+#include "Game.h"
+
+Game* g_game = 0; // our Game object
+
+int main(int argc, char* args[])
+{
+	g_game = new Game();
+	g_game->init("Chapter 1", 100, 100, 640, 480, false);
+
+	while (g_game->running())
+	{
+		g_game->handleEvents();
+		g_game->update();
+		g_game->render();
+	}
+	g_game->clean();
+	return 0;
+
+}
+
+/*
 
 bool g_bRunning = false; // this will create a loop
 
@@ -7,26 +27,6 @@ SDL_Renderer* g_pRenderer = 0;
 
 bool init(const char* title, int xpos, int ypos, int width, int height, int flags);
 void render();
-
-int main(int argc, char* args[])
-{
-	if (init("Chapter 1 : Setting up SDL",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		640, 480, SDL_WINDOW_SHOWN)) {
-		g_bRunning = true;
-	}
-	else {
-		return 1; // something's wrong
-	}
-	while (g_bRunning) {
-		render();
-	}
-	// clean up SDL
-	SDL_Quit();
-	return 0;
-}
-
 
 bool init(const char* title, int xpos, int ypos,
 	int width, int height, int flags)
@@ -55,3 +55,5 @@ void render()
 	// show the window
 	SDL_RenderPresent(g_pRenderer);
 }
+
+*/
