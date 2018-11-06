@@ -4,6 +4,11 @@
 
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "TextureManager.h"
+
+#include <vector>
+
 class Game
 {
 public:
@@ -25,8 +30,14 @@ private:
 
 	bool m_bRunning;
 
-	// checked.09
-	GameObject m_go;
-	Player m_player;
+	// checked.10
+	//GameObject m_go;
+	//Player m_player;
 
+	// checked.10
+	std::vector<GameObject*> m_gameObjects;
+
+	GameObject* m_go;
+	GameObject* m_player;
+	GameObject* m_enemy;
 };
