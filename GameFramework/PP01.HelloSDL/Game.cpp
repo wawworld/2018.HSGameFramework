@@ -2,6 +2,7 @@
 #include <SDL_image.h>  // 추가 
 #include <iostream> // checked
 
+
 #include "Game.h"
 #include "TextureManager.h"
 
@@ -21,7 +22,6 @@ bool Game::init(const char* title, int xpos, int ypos,int width, int height, boo
 
 	m_bRunning = true;  // checked 
 
-	//m_textureManager.load("assets/animate-alpha.png", "animate", m_pRenderer); // checked.08
 	//checked.08   
 	if(!TheTextureManager::Instance()->load("assets/animate-alpha.png","animate", m_pRenderer))
 	{
@@ -30,12 +30,18 @@ bool Game::init(const char* title, int xpos, int ypos,int width, int height, boo
 
 	SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 
+
+	m_go.load(100, 100, 128, 82, "animate");
+	m_player.load(300, 300, 128, 82, "animate");
+
 	return true;
 }
 
 void Game::update()
 {
-	m_currentFrame = int(((SDL_GetTicks() / 100) % 6)); // checked.07
+	//m_currentFrame = int(((SDL_GetTicks() / 100) % 6)); // checked.07
+	m_go.update();  // checked.09
+	m_player.update();// checked.09
 }
 
 void Game::render()
@@ -43,11 +49,11 @@ void Game::render()
 	// draw color로 render 지우기
 	SDL_RenderClear(m_pRenderer);
 	// 원본 사각형과 대상 사각형의 위치와 크기에 따라 화면에 다르게 나타남…  
-	//m_textureManager.draw("animate", 0, 0, 128, 82, m_pRenderer); // checked.08
-	//m_textureManager.drawFrame("animate", 100, 100, 128, 82, 1, m_currentFrame, m_pRenderer); // checked.08
-	// checked.08
-	TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82,m_pRenderer);
-	TheTextureManager::Instance()->drawFrame("animate", 100, 100,128, 82, 1, m_currentFrame, m_pRenderer);
+	// checked.09
+	//TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82,m_pRenderer);
+	//TheTextureManager::Instance()->drawFrame("animate", 100, 100,128, 82, 1, m_currentFrame, m_pRenderer);
+	m_go.draw(m_pRenderer);  	    // checked.09
+	m_player.draw(m_pRenderer); 	// checked.09
 
 	// 화면 제시하기
 	SDL_RenderPresent(m_pRenderer); 

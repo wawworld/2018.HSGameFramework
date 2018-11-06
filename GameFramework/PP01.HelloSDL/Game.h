@@ -1,6 +1,9 @@
 #pragma once
 #include "SDL.h"
-#include "TextureManager.h" // checked
+//#include "TextureManager.h" // checked
+
+#include "GameObject.h"
+#include "Player.h"
 class Game
 {
 public:
@@ -21,4 +24,9 @@ private:
 	int m_currentFrame; // checked.07
 
 	bool m_bRunning;
+
+	// checked.09
+	GameObject m_go;
+	Player m_player;
+
 };
