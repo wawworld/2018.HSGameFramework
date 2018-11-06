@@ -19,25 +19,30 @@ bool Game::init(const char* title, int xpos, int ypos,int width, int height, boo
 
 	m_bRunning = true;  // checked 
 
-	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");
-	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer,
-		pTempSurface);
+
+	SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/animate.bmp");
+	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer,pTempSurface);
 	SDL_FreeSurface(pTempSurface);
 
-	SDL_QueryTexture(m_pTexture, NULL, NULL,
-		&m_sourceRectangle.w, &m_sourceRectangle.h);
+	m_sourceRectangle.w = 128;
+	m_sourceRectangle.h = 82;
 
-	return true;
-}
-
-void Game::render()
-{
-	// 원본 사각형 : m_sourceRectangle , 대상 사각형 : m_destinationRectangle
 	m_destinationRectangle.x = m_sourceRectangle.x = 0;
 	m_destinationRectangle.y = m_sourceRectangle.y = 0;
 	m_destinationRectangle.w = m_sourceRectangle.w;
 	m_destinationRectangle.h = m_sourceRectangle.h;
 
+	return true;
+}
+
+void Game::update()
+{
+	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+}
+
+void Game::render()
+{
 	// draw color로 render 지우기
 	SDL_RenderClear(m_pRenderer);
 	// 원본 사각형과 대상 사각형의 위치와 크기에 따라 화면에 다르게 나타남…  
